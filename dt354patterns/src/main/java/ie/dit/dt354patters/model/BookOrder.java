@@ -3,6 +3,7 @@ package ie.dit.dt354patters.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -15,7 +16,7 @@ public class BookOrder implements Cloneable{
     @GeneratedValue
     private int id;
     private String orderDate;
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "order")
     private List<BookItem> bookItems;
     private boolean newOrder;
     private double orderTotal;
@@ -82,6 +83,9 @@ public class BookOrder implements Cloneable{
     }
 
     public double getOrderTotal() {
+    	for(BookItem i: this.bookItems){
+    		this.orderTotal = this.orderTotal + (i.getQuantity() * i.getBook().getPrice());
+    	}
         return orderTotal;
     }
 

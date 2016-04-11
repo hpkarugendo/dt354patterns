@@ -21,15 +21,15 @@
                 <th>Title</th>
                 <th>QUANTITY</th>
             </tr>
-            <tr>
-                <td>Title</td>
-                <td>Quantity</td>
+            <tr th:each="i : ${order.bookItems}">
+                <td th:text="${i.book.title}">Title</td>
+                <td th:text="${i.quantity}">Quantity</td>
             </tr>
      </table>
     </div>
     <div class="row">
     	<div class="col-md-9">
-    		<h3>Total: €0.00</h3>
+    		<h3 th:text="${'Total: ' + total}">Total</h3>
     	</div>
     	<div class="col-md-3">
     		<a th:href="@{'/checkout/' + order.id}" class="btn btn-default">Checkout</a>

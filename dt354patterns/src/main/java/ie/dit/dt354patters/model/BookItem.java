@@ -3,6 +3,7 @@ package ie.dit.dt354patters.model;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
 @Entity
@@ -13,6 +14,8 @@ public class BookItem {
     @OneToOne
     private Book book;
     private int quantity;
+    @ManyToOne
+    private BookOrder order;
     
     public BookItem() {
 	super();
@@ -26,7 +29,15 @@ public class BookItem {
         this.id = id;
     }
 
-    public Book getBook() {
+    public BookOrder getOrder() {
+		return order;
+	}
+
+	public void setOrder(BookOrder order) {
+		this.order = order;
+	}
+
+	public Book getBook() {
         return book;
     }
 
