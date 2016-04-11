@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head lang="en">
+ 
+    <title>Publisher</title>
+ 
+    <!--/*/ <th:block th:include="headers :: head"></th:block> /*/-->
+</head>
+<body>
+ 
+<div class="container">
+	<!--/*/ <th:block th:include="menus :: menu-manager"></th:block> /*/-->
+   	<div>
+   		<h1>New Publisher</h1>
+   		<div>
+   			<form class="form-horizontal" th:object="${publisher}" th:action="@{/publisher}" method="post">
+            <input type="hidden" th:field="*{id}"/>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Name:</label>
+                    <div class="col-sm-10">
+                        <input type="text" th:field="*{name}" required="required" class="form-control" />
+                    </div>
+                </div>
+                <div class="form-group">
+                	<label class="col-sm-2 control-label"></label>
+                    <div class="col-sm-10">
+                    	<button type="submit" class="btn btn-success">Save</button>
+                    	<button type="reset" class="btn btn-default">Clear</button>
+                    </div>
+                </div>
+            </form>
+   		</div>
+   	</div>
+</div>
+</body>
+</html>

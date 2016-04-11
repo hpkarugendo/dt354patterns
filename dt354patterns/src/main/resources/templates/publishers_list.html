@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+ 
+    <title>Publishers</title>
+ 
+    <!--/*/ <th:block th:include="headers :: head"></th:block> /*/-->
+</head>
+<body>
+ 
+<div class="container">
+    <!--/*/ <th:block th:include="menus :: menu-manager"></th:block> /*/-->
+    <h2>Publisher List</h2>
+    <table class="table table-hover table-bordered">
+            <tr>
+                <th><a th:href="@{/publishers}">ID</a></th>
+                <th><a th:href="@{/publishers-by-name}">NAME</a></th>
+                <th>Edit</th>
+                <th>Delete</th>
+            </tr>
+            <tr th:each="p : ${publishers}">
+                <td th:text="${p.id}">Id</td>
+                <td th:text="${p.name}">Name</td>
+                <td><a th:href="${'/publisher/edit/' + p.id}">Edit</a></td>
+                <td><a th:href="${'/publisher/delete/' + p.id}">Delete</a></td>
+            </tr>
+        </table>
+        <a th:href="@{/publisher}" class="btn btn-default">Add New</a>
+</div>
+</body>
+</html>

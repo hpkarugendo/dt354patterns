@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+ 
+    <title>Authors</title>
+ 
+    <!--/*/ <th:block th:include="headers :: head"></th:block> /*/-->
+</head>
+<body>
+ 
+<div class="container">
+    <!--/*/ <th:block th:include="menus :: menu-manager"></th:block> /*/-->
+    <div class="row">
+    	<div class="col-md-8">
+    		<h2>Author List</h2>
+    	</div>
+    	<div class="col-md-4" id="custom-search-input">
+        	<form class="form-inline" action="#" th:action="@{/authors/search}" method="get">
+            	<input type="text" name="searchName" class="form-control input-md" placeholder="Last Name" />
+                <button class="btn btn-info btn-md" type="submit">
+                    <i class="glyphicon glyphicon-search"></i>
+                </button>
+            </form>
+       	</div>
+    </div>
+    <table class="table table-hover table-bordered">
+            <tr>
+                <th><a th:href="@{/authors}">ID</a></th>
+                <th><a th:href="@{/authors-by-firstName}">FIRST NAME</a></th>
+                <th><a th:href="@{/authors-by-lastName}">LAST NAME</a></th>
+                <th>Edit</th>
+                <th>Delete</th>
+            </tr>
+            <tr th:each="a : ${authors}">
+                <td th:text="${a.id}">Id</td>
+                <td th:text="${a.firstName}">First Name</td>
+                <td th:text="${a.lastName}">Last Name</td>
+                <td><a th:href="${'/author/edit/' + a.id}">Edit</a></td>
+                <td><a th:href="${'/author/delete/' + a.id}">Delete</a></td>
+            </tr>
+        </table>
+        <a th:href="@{/author}" class="btn btn-default">Add New</a>
+</div>
+</body>
+</html>

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head lang="en">
+ 
+    <title>Book</title>
+ 
+    <!--/*/ <th:block th:include="headers :: head"></th:block> /*/-->
+</head>
+<body>
+ 
+<div class="container">
+	<!--/*/ <th:block th:include="menus :: menu-manager"></th:block> /*/-->
+   	<div>
+   		<h1>New Book</h1>
+   		<div>
+   			<form class="form-horizontal" th:object="${book}" th:action="@{/book}" enctype="multipart/form-data" method="post">
+            <input type="hidden" th:field="*{id}"/>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Image:</label>
+                    <div class="col-sm-10">
+                        <input type="file" name="file" class="form-control" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Date Published:</label>
+                    <div class="col-sm-10">
+                        <input type="text" th:field="*{releaseDate}" required="required" placeholder="yyyy/MM/dd" class="form-control" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">ISBN:</label>
+                    <div class="col-sm-10">
+                        <input type="number" th:field="*{isbn}" required="required" min="10" class="form-control" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Title:</label>
+                    <div class="col-sm-10">
+                        <input type="text" th:field="*{title}" required="required" class="form-control" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Price:</label>
+                    <div class="col-sm-10">
+                        <input type="number" th:field="*{price}" step="0.01" min="0.01" required="required" class="form-control" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Gender:</label>
+                    <div class="col-sm-10">
+                        <select th:field="*{genre}" class="form-control">
+    						<option value="FANTASY">FANTASY</option>
+    						<option value="DRAMA">DRAMA</option>
+    						<option value="ROMANCE">ROMANCE</option>
+    						<option value="ADVENTURE">ADVENTURE</option>
+    						<option value="SCIENCE FICTION">SCIENCE FICTION</option>
+    						<option value="FICTION">FICTION</option>
+    						<option value="POETRY">POETRY</option>
+    						<option value="CRIME">CRIME</option>
+    						<option value="DRAMA">DRAMA</option>
+						</select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Publisher:</label>
+                    <div class="col-sm-10">
+                        <select th:field="*{publisher}" class="form-control">
+    						<option th:each="p : ${publishers}" th:value="${p.id}" th:text="${p.name}">Publisher</option>
+						</select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Author:</label>
+                    <div class="col-sm-10">
+                        <select th:field="*{author}" class="form-control">
+    						<option th:each="a : ${authors}" th:value="${a.id}" th:text="${a.firstName + ' ,' + a.lastName}">Author</option>
+						</select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Description:</label>
+                    <div class="col-sm-10">
+                        <textarea rows="10" th:field="*{description}" required="required" class="form-control" />
+                    </div>
+                </div>
+                <div class="form-group">
+                	<label class="col-sm-2 control-label"></label>
+                    <div class="col-sm-10">
+                    	<button type="submit" class="btn btn-success">Save</button>
+                    	<button type="reset" class="btn btn-default">Clear</button>
+                    </div>
+                </div>
+            </form>
+   		</div>
+   	</div>
+</div>
+</body>
+</html>

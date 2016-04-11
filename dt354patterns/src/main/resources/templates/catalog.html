@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head lang="en">
+ 
+    <title>Shop</title>
+ 
+    <!--/*/ <th:block th:include="headers :: head"></th:block> /*/-->
+</head>
+<body>
+ 
+<div class="container">
+	<!--/*/ <th:block th:include="menus :: menu-customer"></th:block> /*/-->
+   	<div class="row">
+   		<div class="col-md-12">
+   			<div>
+   				<div class="row">
+    				<div class="col-md-8">
+    					<h2>Book List</h2>
+    				</div>
+    				<div class="col-md-4" id="custom-search-input">
+        				<form class="form-inline" action="#" th:action="@{/books/search}" method="get">
+            				<input type="text" name="searchTitle" class="form-control input-md" placeholder="Title" />
+                			<button class="btn btn-info btn-md" type="submit">
+                    			<i class="glyphicon glyphicon-search"></i>
+                			</button>
+            			</form>
+       				</div>
+    			</div>
+    			<div th:each="b : ${books}" class="row">
+    				<div class="col-md-3">
+    					<img th:src="@{'files/static/images/' + ${b.imageFilename}}" alt="book_cover" />
+    				</div>
+    				<div class="col-md-7">
+    					<table class="table">
+    						<tbody>
+    							<tr>
+    								<td><b>Title:</b></td>
+    								<td th:text="${b.title}">Title</td>
+    							</tr>
+    							<tr>
+    								<td><b>Author:</b></td>
+    								<td th:text="${b.author.firstName + ' ' + b.author.lastName}">Author</td>
+    							</tr>
+    							<tr>
+    								<td><b>Genre:</b></td>
+    								<td th:text="${b.genre}">Genre</td>
+    							</tr>
+    							<tr>
+    								<td><b>Description:</b></td>
+    								<td th:text="${b.description}">Description</td>
+    							</tr>
+    						</tbody>
+    					</table>
+    				</div>
+    				<div class="col-md-2">
+    					<a class="btn btn-info">Add To Cart</a>
+    				</div>
+    			</div>
+   			</div>
+   		</div>
+   	</div>
+</div>
+</body>
+</html>
