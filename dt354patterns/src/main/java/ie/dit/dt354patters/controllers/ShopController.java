@@ -71,66 +71,23 @@ public class ShopController {
     
     @RequestMapping(value="/books/search", method=RequestMethod.GET)
     public String shopListingSearch(Model model, HttpServletRequest req) {
-	if (AccountResolver.INSTANCE.getAccount(req) != null) {
-            Account acc = AccountResolver.INSTANCE.getAccount(req);
+    	Account acc = AccountResolver.INSTANCE.getAccount(req);
             String title = req.getParameter("searchTitle");
-            if(acc.isMemberOfGroup("Customers")){
-        	Customer c = cRepo.findByEmail(acc.getEmail());
-        	if(c != null){
-        	    return "redirect:/catalog";
-        	} else {
-        	    c = new Customer();
-            	c.setEmail(acc.getEmail());
-            	c.setFirstName(acc.getGivenName());
-            	c.setLastName(acc.getSurname());
-            	Customer c2 = cRepo.save(c);
-            	model.addAttribute("cart", c2.getCart());
         	model.addAttribute("books", bRepo.findByTitle(title));
-        	model.addAttribute("total", c2.getCart().getTotalPrice());
-            	model.addAttribute("customer", c2);
-    		return "redirect:/catalog";
-        	}
-            } else {
-        	model.addAttribute("books", bRepo.findAllByOrderByTitle());
-        	return "redirect:/shelf";
-	    }
-	}
-
-        return "shop";
+            	model.addAttribute("customer", cRepo.findByEmail(acc.getEmail()));
+            return "catalog";
     }
     
     @RequestMapping(value="/books/fantasy", method=RequestMethod.GET)
     public String shopListingByGenre(Model model, HttpServletRequest req) {
-	if (AccountResolver.INSTANCE.getAccount(req) != null) {
-            Account acc = AccountResolver.INSTANCE.getAccount(req);
-            
-            if(acc.isMemberOfGroup("Customers")){
-        	Customer c = cRepo.findByEmail(acc.getEmail());
-        	if(c != null){
-        	    return "redirect:/catalog";
-        	} else {
-        	    c = new Customer();
-            	c.setEmail(acc.getEmail());
-            	c.setFirstName(acc.getGivenName());
-            	c.setLastName(acc.getSurname());
-            	Customer c2 = cRepo.save(c);
-            	model.addAttribute("cart", c2.getCart());
-            	Criteria ctr = new CriteriaFantasy();
+		Account acc = AccountResolver.INSTANCE.getAccount(req);
+           Criteria ctr = new CriteriaFantasy();
             	for(Book b : ctr.meetsCriteria(bRepo.findAll())){
             	    System.out.println(b);
             	}
         	model.addAttribute("books", ctr.meetsCriteria(bRepo.findAll()));
-        	model.addAttribute("total", c2.getCart().getTotalPrice());
-            	model.addAttribute("customer", c2);
+            model.addAttribute("customer", cRepo.findByEmail(acc.getEmail()));
     		return "catalog";
-        	}
-            } else {
-        	model.addAttribute("books", bRepo.findAllByOrderByTitle());
-        	return "redirect:/shelf";
-	    }
-	}
-
-        return "shop";
     }
     
     @RequestMapping(value="/catalog", method=RequestMethod.GET)
