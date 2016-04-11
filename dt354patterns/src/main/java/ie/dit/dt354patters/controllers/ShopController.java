@@ -69,6 +69,36 @@ public class ShopController {
         return "shop";
     }
     
+    @RequestMapping(value="/books/search", method=RequestMethod.GET)
+    public String shopListingSearch(Model model, HttpServletRequest req) {
+	if (AccountResolver.INSTANCE.getAccount(req) != null) {
+            Account acc = AccountResolver.INSTANCE.getAccount(req);
+            String title = req.getParameter("searchTitle");
+            if(acc.isMemberOfGroup("Customers")){
+        	Customer c = cRepo.findByEmail(acc.getEmail());
+        	if(c != null){
+        	    return "redirect:/catalog";
+        	} else {
+        	    c = new Customer();
+            	c.setEmail(acc.getEmail());
+            	c.setFirstName(acc.getGivenName());
+            	c.setLastName(acc.getSurname());
+            	Customer c2 = cRepo.save(c);
+            	model.addAttribute("cart", c2.getCart());
+        	model.addAttribute("books", bRepo.findByTitle(title));
+        	model.addAttribute("total", c2.getCart().getTotalPrice());
+            	model.addAttribute("customer", c2);
+    		return "redirect:/catalog";
+        	}
+            } else {
+        	model.addAttribute("books", bRepo.findAllByOrderByTitle());
+        	return "redirect:/shelf";
+	    }
+	}
+
+        return "shop";
+    }
+    
     @RequestMapping(value="/books/fantasy", method=RequestMethod.GET)
     public String shopListingByGenre(Model model, HttpServletRequest req) {
 	if (AccountResolver.INSTANCE.getAccount(req) != null) {
