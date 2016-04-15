@@ -41,32 +41,8 @@ public class ShopController {
     
     @RequestMapping(value="/", method=RequestMethod.GET)
     public String shopListing(Model model, HttpServletRequest req) {
-	if (AccountResolver.INSTANCE.getAccount(req) != null) {
-            Account acc = AccountResolver.INSTANCE.getAccount(req);
-            
-            if(acc.isMemberOfGroup("Customers")){
-        	Customer c = cRepo.findByEmail(acc.getEmail());
-        	if(c != null){
-        	    return "redirect:/catalog";
-        	} else {
-        	    c = new Customer();
-            	c.setEmail(acc.getEmail());
-            	c.setFirstName(acc.getGivenName());
-            	c.setLastName(acc.getSurname());
-            	Customer c2 = cRepo.save(c);
-            	model.addAttribute("cart", c2.getCart());
-        	model.addAttribute("books", bRepo.findAllByOrderByTitle());
-        	model.addAttribute("total", c2.getCart().getTotalPrice());
-            	model.addAttribute("customer", c2);
-    		return "redirect:/catalog";
-        	}
-            } else {
-        	model.addAttribute("books", bRepo.findAllByOrderByTitle());
-        	return "redirect:/shelf";
-	    }
-	}
-
-        return "shop";
+    	model.addAttribute("books", bRepo.findAll());
+		return "shop";
     }
     
     @RequestMapping(value="/books/search", method=RequestMethod.GET)
